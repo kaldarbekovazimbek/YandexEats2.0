@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\DTO\UserDTO;
 use App\Interfaces\IUserRepository;
+use App\Models\Order;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
@@ -54,4 +55,5 @@ class   UserRepository implements IUserRepository
 
         return $user;
     }
+
 }

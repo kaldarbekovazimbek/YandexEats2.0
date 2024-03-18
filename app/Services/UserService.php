@@ -77,6 +77,11 @@ class UserService
      */
     public function delete(int $userId): ?User
     {
-        return $this->getUserById($userId);
+        $user = $this->getUserById($userId);
+        if ($user === null){
+            throw new NotFoundException(__('messages.object_not_found'), 404);
+        }
+
+        return $user;
     }
 }

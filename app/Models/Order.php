@@ -9,6 +9,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * @property int $id
+ * @property int $userId
+ * @property int $restaurantId
+ * @property string $status
+ * @property float $totalPrice
+ * @property int $restaurantWorkerId
+ */
 class Order extends Model
 {
     use HasFactory;

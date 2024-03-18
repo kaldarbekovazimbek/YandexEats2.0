@@ -2,7 +2,6 @@
 
 namespace App\DTO;
 
-use mysql_xdevapi\SqlStatementResult;
 
 class UserDTO
 {

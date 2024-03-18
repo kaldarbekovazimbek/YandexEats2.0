@@ -2,64 +2,82 @@
 
 namespace App\Http\Controllers;
 
+use App\DTO\RestaurantDTO;
+use App\Exceptions\NotFoundException;
+use App\Http\Requests\RestaurantRequest;
+use App\Http\Resources\RestaurantCollection;
+use App\Http\Resources\RestaurantResource;
 use App\Models\Restaurant;
+use App\Services\RestaurantService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class RestaurantController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    private RestaurantService $restaurantService;
+
+    public function __construct(RestaurantService $restaurantService)
     {
-        //
+        $this->restaurantService = $restaurantService;
+    }
+
+    /**
+     * @throws NotFoundException
+     */
+    public function index(): RestaurantCollection
+    {
+        $restaurants = $this->restaurantService->getRestaurants();
+
+        return new RestaurantCollection($restaurants);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function store(RestaurantRequest $request): RestaurantResource
     {
-        //
-    }
+        $validData = $request->validated();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+        $restaurant = $this->restaurantService->create(RestaurantDTO::fromArray($validData));
+
+        return new RestaurantResource($restaurant);
     }
 
     /**
      * Display the specified resource.
+     * @throws NotFoundException
      */
-    public function show(Restaurant $restaurant)
+    public function show(int $restaurantId): RestaurantResource
     {
-        //
+        $restaurant = $this->restaurantService->getById($restaurantId);
+
+        return new RestaurantResource($restaurant);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Restaurant $restaurant)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
+     * @throws NotFoundException
      */
-    public function update(Request $request, Restaurant $restaurant)
+    public function update(int $restaurantId, RestaurantRequest $request): RestaurantResource
     {
-        //
+        $validData = $request->validated();
+
+        $restaurant = $this->restaurantService->update($restaurantId, RestaurantDTO::fromArray($validData));
+
+        return new RestaurantResource($restaurant);
     }
 
     /**
      * Remove the specified resource from storage.
+     * @throws NotFoundException
      */
-    public function destroy(Restaurant $restaurant)
+    public function destroy(int $restaurantId): JsonResponse
     {
-        //
+        $this->restaurantService->getById($restaurantId);
+
+        return response()->json([
+            'message' => __('messages.object_deleted')
+        ]);
     }
 }
