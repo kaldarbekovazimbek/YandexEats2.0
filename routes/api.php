@@ -1,17 +1,11 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
-
+Route::get('/users', [UserController::class, 'index'])->name('users.index');
+Route::post('/users', [UserController::class, 'store']);
+Route::get('/users/{userId}', [UserController::class, 'show'])->name('users.store');
+Route::match(['put', 'patch'],'/users/{userId}', [UserController::class, 'update'])->name('users.store');
+Route::delete('/users/{userId}', [UserController::class, 'destroy'])->name('users.store');
 
