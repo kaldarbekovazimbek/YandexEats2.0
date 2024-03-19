@@ -84,4 +84,14 @@ class UserService
 
         return $user;
     }
+
+    public function getOrders(int $userId)
+    {
+        $orders = $this->userRepository->getOrders($userId);
+        if ($orders===null){
+            throw new NotFoundException(__('messages.object_not_found'), 404);
+        }
+
+        return $orders;
+    }
 }

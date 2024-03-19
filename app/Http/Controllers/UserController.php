@@ -6,6 +6,7 @@ use App\DTO\UserDTO;
 use App\Exceptions\ExistsObjectException;
 use App\Exceptions\NotFoundException;
 use App\Http\Requests\UserRequest;
+use App\Http\Resources\OrderCollection;
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
 use App\Services\UserService;
@@ -74,5 +75,12 @@ class UserController extends Controller
         return response()->json([
             'message' => __('messages.object_deleted')
         ]);
+    }
+
+    public function getOrders($userId)
+    {
+        $orders = $this->userService->getOrders($userId);
+
+        return new OrderCollection($orders);
     }
 }

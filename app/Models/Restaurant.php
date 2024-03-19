@@ -13,8 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $phone
  */
 
-class Restaurant extends Model
-{
+class Restaurant extends Model{
     use HasFactory;
 
     public $fillable = [

@@ -45,7 +45,7 @@ class Order extends Model
         return $this->belongsToMany(Restaurant::class);
     }
 
-    public function restaurantWorker(): BelongsTo
+    public function workers(): BelongsTo
     {
         return $this->belongsTo(RestaurantWorker::class);
     }

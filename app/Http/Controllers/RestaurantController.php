@@ -7,10 +7,8 @@ use App\Exceptions\NotFoundException;
 use App\Http\Requests\RestaurantRequest;
 use App\Http\Resources\RestaurantCollection;
 use App\Http\Resources\RestaurantResource;
-use App\Models\Restaurant;
 use App\Services\RestaurantService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class RestaurantController extends Controller
 {
