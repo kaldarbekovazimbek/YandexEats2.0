@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CartRequest extends FormRequest
+class OrderItemRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,10 +22,7 @@ class CartRequest extends FormRequest
     public function rules(): array
     {
         return [
-
-            'restaurant_id' => ['required', 'integer'],
-            'dishes.*.dish_id' => ['required', 'integer'],
-            'dishes.*.quantity' => ['required', 'integer'],
+            //
         ];
     }
 }

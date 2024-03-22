@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\RestaurantWorkerController;
 use App\Http\Controllers\UserController;
@@ -14,7 +15,7 @@ Route::delete('/users/{userId}', [UserController::class, 'destroy'])->name('user
 //Route::get('/users/{userId}/orders', [UserController::class, 'show'])->name('users.store');
 
 
-Route::get('/users/{userId}/cart', [CartController::class, 'showCart']);
+Route::get('/users/{userId}/cart', [CartController::class, 'show']);
 Route::post('/users/{userId}/cart', [CartController::class, 'addToCart']);
 
 
@@ -31,3 +32,5 @@ Route::put('/workers/{workerId}', [RestaurantWorkerController::class, 'update'])
 Route::delete('/workers/{workerId}', [RestaurantWorkerController::class, 'destroy']);
 Route::get('/restaurants/{restaurantId}/workers', [RestaurantWorkerController::class, 'getByRestaurant'])->name('restaurants.store');
 
+
+Route::post('/checkout/{userId}', [OrderController::class, 'checkout']);

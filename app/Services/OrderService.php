@@ -2,9 +2,12 @@
 
 namespace App\Services;
 
+use App\DTO\OrderDTO;
 use App\Exceptions\NotFoundException;
 use App\Interfaces\IOrderRepository;
 use App\Models\Order;
+use App\Repositories\OrderRepository;
+use function PHPUnit\Framework\returnArgument;
 
 class OrderService
 {
@@ -49,6 +52,19 @@ class OrderService
     public function getByUserId(int $userId)
     {
         $userOrder = $this->orderRepository->getByUserId($userId);
+    }
+
+    /**
+     * @throws NotFoundException
+     */
+    public function getRestaurantById(int $restaurantId)
+    {
+        $restaurants = $this->orderRepository->getByRestaurantId($restaurantId);
+
+        if ($restaurants === null) {
+            throw new NotFoundException(__('messages.object_not_found'), 404);
+        }
+        return $restaurants;
     }
 
 }

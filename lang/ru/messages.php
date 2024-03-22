@@ -9,5 +9,6 @@ return [
     'Code_send'=>'Код отправлен на почту',
     'email_verified'=>'Почта подтверждена',
     'email_not_verified'=>'Почта не подтверждена',
-
+    'cart_is_empty'=> 'Корзина пуста',
+    'order_placed'=>'Блюдо добавлена в корзину',
 ];

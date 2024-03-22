@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Exceptions\NotFoundException;
 use App\Http\Requests\CartRequest;
 use App\Models\Dish;
+
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
 
 class CartController extends Controller
@@ -19,30 +21,49 @@ class CartController extends Controller
             throw new NotFoundException(__('messages.object_not_found'), 404);
         }
         return $userCart;
+
     }
 
-    /**
-     * @throws NotFoundException
-     */
-    public function addToCart(CartRequest $request, int $userId): bool
+    public function addToCart(CartRequest $request, int $userId): JsonResponse
     {
         $validData = $request->validated();
-        $dish = Dish::query()->find($validData['dish_id']);
+        $totalPrice = 0; // Инициализируем общую цену
+        $addedDishes = []; // Массив для хранения информации о добавленных блюдах
+        $restaurantId = $validData['restaurant_id']; // Получаем restaurant_id из запроса
 
-        if (!$dish) {
-            if ($dish === null) {
-                throw new NotFoundException(__('messages.object_not_found'), 404);
+        foreach ($validData['dishes'] as $item) {
+            $dish = Dish::find($item['dish_id']);
+
+            if (!$dish) {
+                return response()->json([
+                    'error' => 'Dish with ID ' . $item['dish_id'] . ' not found.'
+                ], 404);
             }
-            return false;
+
+            // Вычисляем стоимость для текущего блюда и добавляем её к общей цене
+            $totalPrice += $dish->price * $item['quantity'];
+
+            // Сохраняем информацию о добавленном блюде в массив
+            $addedDishes[] = [
+                'dish_id' => $item['dish_id'],
+                'quantity' => $item['quantity']
+            ];
         }
 
-        $price = $dish->price;
-        $quantity = $validData['quantity'];
-        $total_price = $price * $quantity;
-        $validData['total_price'] = $total_price;
+        // Создаем массив с общей ценой, информацией о добавленных блюдах и restaurant_id
+        $cartData = [
+            'restaurant_id' => $restaurantId,
+            'total_price' => $totalPrice,
+            'added_dishes' => $addedDishes
+        ];
 
-        Cache::put('user-cart:' . $userId, $validData, 60 * 5);
+        // Добавляем общую цену, информацию о добавленных блюдах и restaurant_id в кеш
+        $cartKey = 'user-cart:' . $userId;
+        Cache::put($cartKey, $cartData, 60 * 5);
 
-        return true;
+        return response()->json([
+            'added_dishes' => $addedDishes,
+            'total_price' => $totalPrice
+        ]);
     }
 }

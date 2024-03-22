@@ -17,7 +17,7 @@ return new class extends Migration
                 ->cascadeOnUpdate()
                 ->cascadeOnUpdate();
             $table->unsignedInteger('quantity');
-            $table->decimal('price');
+//            $table->decimal('price');
             $table->timestamps();
         });
     }

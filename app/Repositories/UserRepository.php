@@ -7,13 +7,14 @@ use App\Interfaces\IUserRepository;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\Pagination\Paginator;
 
 class   UserRepository implements IUserRepository
 {
 
-    public function index(): LengthAwarePaginator
+    public function index(): Paginator
     {
-        return User::query()->paginate(15);
+        return User::query()->simplePaginate(15);
     }
 
     public function getById(int $userId): ?User

@@ -43,11 +43,25 @@ class OrderRepository implements IOrderRepository
     public function create(OrderDTO $orderDTO): Order
     {
         $order = new Order();
+        $order->userId = $orderDTO->getUserId();
+        $order->restaurantId = $orderDTO->getRestaurantId();
+        $order->status = $orderDTO->getStatus();
+        $order->totalPrice = $orderDTO->getTotalPrice();
+        $order->save();
 
+        return $order;
     }
 
     public function update(int $orderId, OrderDTO $orderDTO): ?Order
     {
-        // TODO: Implement update() method.
+        $order = $this->getById($orderId);
+        $order->userId = $orderDTO->getUserId();
+        $order->restaurantId = $orderDTO->getRestaurantId();
+        $order->status = $orderDTO->getStatus();
+        $order->totalPrice = $orderDTO->getTotalPrice();
+        $order->save();
+
+        return $order;
     }
+
 }

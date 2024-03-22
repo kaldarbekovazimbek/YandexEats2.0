@@ -19,9 +19,9 @@ return new class extends Migration
             $table->foreignId('restaurant_id')->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
-            $table->string('status');
+            $table->string('status')->default('in process');
             $table->decimal('total_price',9,2);
-            $table->foreignId('restaurant_worker_id');
+            $table->foreignId('restaurant_worker_id')->nullable();
             $table->timestamps();
         });
     }

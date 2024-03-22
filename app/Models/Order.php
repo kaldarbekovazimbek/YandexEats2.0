@@ -11,11 +11,11 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property int $id
- * @property int $userId
- * @property int $restaurantId
+ * @property int $user_id
+ * @property int $restaurant_id
  * @property string $status
- * @property float $totalPrice
- * @property int $restaurantWorkerId
+ * @property float $total_price
+ * @property int $restaurant_worker_id
  */
 class Order extends Model
 {
