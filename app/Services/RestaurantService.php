@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\DTO\RestaurantDTO;
+use App\DTO\Restaurant\RestaurantDTO;
 use App\Exceptions\NotFoundException;
 use App\Interfaces\IRestaurantRepository;
 use App\Models\Restaurant;

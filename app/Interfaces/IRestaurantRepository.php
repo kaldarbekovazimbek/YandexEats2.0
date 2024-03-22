@@ -2,7 +2,7 @@
 
 namespace App\Interfaces;
 
-use App\DTO\RestaurantDTO;
+use App\DTO\Restaurant\RestaurantDTO;
 
 interface IRestaurantRepository
 {

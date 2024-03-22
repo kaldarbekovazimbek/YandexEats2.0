@@ -10,10 +10,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * @property int $id
  * @property string $name
- * @property string $description
+ * @property string $descriptions
  * @property float $price
  * @property string $category
- * @property int $restaurantId
+ * @property int $restaurant_id
  */
 class Dish extends Model
 {
@@ -24,7 +24,7 @@ class Dish extends Model
         'descriptions',
         'price',
         'category',
-//        'restaurant_id'
+        'restaurant_id'
     ];
 
     public function restaurant(): BelongsTo

@@ -2,11 +2,10 @@
 
 namespace App\Repositories;
 
-use App\DTO\UserDTO;
+use App\DTO\User\UserDTO;
 use App\Interfaces\IUserRepository;
 use App\Models\Order;
 use App\Models\User;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\Pagination\Paginator;
 
 class   UserRepository implements IUserRepository

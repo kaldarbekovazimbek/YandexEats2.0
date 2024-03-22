@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\DTO\UpdateOrderDTO;
+use App\DTO\Order\UpdateOrderDTO;
 use App\Exceptions\CartException;
 use App\Exceptions\NotFoundException;
 use App\Http\Requests\OrderCangeStatusRequest;
@@ -10,7 +10,6 @@ use App\Http\Resources\OrderCollection;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use App\Models\OrderItem;
-
 use App\Services\OrderService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
@@ -66,7 +65,11 @@ class OrderController extends Controller
             'order_id' => $order->id
         ]);
     }
-    public function update(int $orderId, OrderCangeStatusRequest $request)
+
+    /**
+     * @throws NotFoundException
+     */
+    public function update(int $orderId, OrderCangeStatusRequest $request): OrderResource
     {
         $validData = $request->validated();
         $order = $this->orderService->update($orderId, UpdateOrderDTO::fromArray($validData));

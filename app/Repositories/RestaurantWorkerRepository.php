@@ -2,14 +2,10 @@
 
 namespace App\Repositories;
 
-use App\DTO\RestaurantWorkerDTO;
-use App\DTO\UserDTO;
+use App\DTO\Restaurant\RestaurantWorkerDTO;
 use App\Interfaces\IRestaurantWorkerRepository;
-use App\Interfaces\IUserRepository;
 use App\Models\Order;
-use App\Models\Restaurant;
 use App\Models\RestaurantWorker;
-use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class   RestaurantWorkerRepository implements IRestaurantWorkerRepository

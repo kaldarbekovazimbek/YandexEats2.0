@@ -2,11 +2,9 @@
 
 namespace App\Repositories;
 
-use App\DTO\RestaurantDTO;
+use App\DTO\Restaurant\RestaurantDTO;
 use App\Interfaces\IRestaurantRepository;
-use App\Models\Dish;
 use App\Models\Restaurant;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class RestaurantRepository implements IRestaurantRepository
 {

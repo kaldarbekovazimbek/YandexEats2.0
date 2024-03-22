@@ -2,8 +2,8 @@
 
 namespace App\Repositories;
 
-use App\DTO\OrderDTO;
-use App\DTO\UpdateOrderDTO;
+use App\DTO\Order\OrderDTO;
+use App\DTO\Order\UpdateOrderDTO;
 use App\Interfaces\IOrderRepository;
 use App\Models\Order;
 use App\Models\RestaurantWorker;

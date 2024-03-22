@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\DTO\RestaurantWorkerDTO;
+use App\DTO\Restaurant\RestaurantWorkerDTO;
 use App\Exceptions\ExistsObjectException;
 use App\Exceptions\NotFoundException;
 use App\Interfaces\IRestaurantWorkerRepository;

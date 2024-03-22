@@ -2,13 +2,10 @@
 
 namespace App\Services;
 
-use App\DTO\OrderDTO;
-use App\DTO\UpdateOrderDTO;
+use App\DTO\Order\UpdateOrderDTO;
 use App\Exceptions\NotFoundException;
 use App\Interfaces\IOrderRepository;
 use App\Models\Order;
-use App\Repositories\OrderRepository;
-use function PHPUnit\Framework\returnArgument;
 
 class OrderService
 {

@@ -1,26 +1,32 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\DishController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\RestaurantWorkerController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/users', [UserController::class, 'index'])->name('users.index');
-Route::post('/users', [UserController::class, 'store'])->name('users.store');
-Route::get('/users/{userId}', [UserController::class, 'show'])->name('users.store');
-Route::match(['put', 'patch'], '/users/{userId}', [UserController::class, 'update'])->name('users.store');
-Route::delete('/users/{userId}', [UserController::class, 'destroy'])->name('users.store');
+Route::get('/users', [UserController::class, 'index']);
+Route::post('/users', [UserController::class, 'store']);
+Route::get('/users/{userId}', [UserController::class, 'show']);
+Route::match(['put', 'patch'], '/users/{userId}', [UserController::class, 'update']);
+Route::delete('/users/{userId}', [UserController::class, 'destroy']);
 
 Route::get('/users/{userId}/cart', [CartController::class, 'show']);
 Route::post('/users/{userId}/cart', [CartController::class, 'addToCart']);
 
-Route::get('/restaurants', [RestaurantController::class, 'index'])->name('restaurants.index');
-Route::post('/restaurants', [RestaurantController::class, 'store'])->name('restaurant.store');
-Route::get('/restaurants/{restaurantId}', [RestaurantController::class, 'show'])->name('restaurants.store');
-Route::match(['put', 'patch'], '/restaurants/{restaurantId}', [RestaurantController::class, 'update'])->name('restaurants.store');
-Route::delete('/restaurants/{restaurantId}', [RestaurantController::class, 'destroy'])->name('restaurants.store');
+Route::get('/restaurants', [RestaurantController::class, 'index']);
+Route::post('/restaurants', [RestaurantController::class, 'store']);
+Route::get('/restaurants/{restaurantId}', [RestaurantController::class, 'show']);
+Route::match(['put', 'patch'], '/restaurants/{restaurantId}', [RestaurantController::class, 'update']);
+Route::delete('/restaurants/{restaurantId}', [RestaurantController::class, 'destroy']);
+
+Route::get('/menu', [DishController::class, 'index']);
+Route::post('/menu', [DishController::class, 'store']);
+Route::match(['put', 'patch'], '/menu/{menuId}', [DishController::class, 'update']);
+Route::delete('/menu/{menuId}', [DishController::class, 'destroy']);
 
 Route::get('/workers', [RestaurantWorkerController::class, 'index']);
 Route::post('/workers', [RestaurantWorkerController::class, 'store']);

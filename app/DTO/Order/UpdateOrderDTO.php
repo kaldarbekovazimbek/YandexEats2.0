@@ -1,9 +1,7 @@
 <?php
 
-namespace App\DTO;
+namespace App\DTO\Order;
 
-
-use function Symfony\Component\Translation\t;
 
 class UpdateOrderDTO
 {

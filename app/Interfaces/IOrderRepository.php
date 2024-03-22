@@ -2,8 +2,8 @@
 
 namespace App\Interfaces;
 
-use App\DTO\OrderDTO;
-use App\DTO\UpdateOrderDTO;
+use App\DTO\Order\OrderDTO;
+use App\DTO\Order\UpdateOrderDTO;
 use App\Models\Order;
 
 interface IOrderRepository

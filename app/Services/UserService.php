@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\DTO\UserDTO;
+use App\DTO\User\UserDTO;
 use App\Exceptions\ExistsObjectException;
 use App\Exceptions\NotFoundException;
 use App\Interfaces\IUserRepository;

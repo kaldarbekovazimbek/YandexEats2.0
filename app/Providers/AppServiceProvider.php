@@ -4,12 +4,14 @@ namespace App\Providers;
 
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
+use App\Interfaces\IDishRepository;
 use App\Interfaces\IOrderRepository;
 use App\Interfaces\IRestaurantRepository;
 use App\Interfaces\IRestaurantWorkerRepository;
 use App\Interfaces\IUserRepository;
 use App\Models\RestaurantWorker;
 use App\Models\User;
+use App\Repositories\DishRepository;
 use App\Repositories\OrderRepository;
 use App\Repositories\RestaurantRepository;
 use App\Repositories\RestaurantWorkerRepository;
@@ -27,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(IOrderRepository::class, OrderRepository::class);
         $this->app->bind(IRestaurantRepository::class, RestaurantRepository::class);
         $this->app->bind(IRestaurantWorkerRepository::class, RestaurantWorkerRepository::class);
+        $this->app->bind(IDishRepository::class, DishRepository::class);
     }
 
     /**

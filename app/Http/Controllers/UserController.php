@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\DTO\UserDTO;
+use App\DTO\User\UserDTO;
 use App\Exceptions\ExistsObjectException;
 use App\Exceptions\NotFoundException;
 use App\Http\Requests\UserRequest;
@@ -70,7 +70,7 @@ class UserController extends Controller
      */
     public function destroy(int $userId): JsonResponse
     {
-        $this->userService->delete($userId);
+        $this->userService->delete($userId)->delete();
 
         return response()->json([
             'message' => __('messages.object_deleted')

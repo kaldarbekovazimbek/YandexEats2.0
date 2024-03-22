@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\DTO\RestaurantDTO;
+use App\DTO\Restaurant\RestaurantDTO;
 use App\Exceptions\NotFoundException;
 use App\Http\Requests\RestaurantRequest;
 use App\Http\Resources\RestaurantCollection;

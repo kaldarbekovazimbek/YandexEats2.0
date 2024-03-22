@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\DTO\RestaurantWorkerDTO;
+use App\DTO\Restaurant\RestaurantWorkerDTO;
 use App\Exceptions\ExistsObjectException;
 use App\Exceptions\NotFoundException;
 use App\Http\Requests\RestaurantWorkerRequest;
 use App\Http\Resources\OrderCollection;
-use App\Http\Resources\OrderResource;
 use App\Http\Resources\RestaurantWorkerCollection;
 use App\Http\Resources\RestaurantWorkerResource;
 use App\Services\RestaurantWorkerService;

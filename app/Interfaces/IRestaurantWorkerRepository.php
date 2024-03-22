@@ -2,7 +2,7 @@
 
 namespace App\Interfaces;
 
-use App\DTO\RestaurantWorkerDTO;
+use App\DTO\Restaurant\RestaurantWorkerDTO;
 use App\Models\RestaurantWorker;
 
 interface IRestaurantWorkerRepository
