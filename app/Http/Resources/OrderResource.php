@@ -21,11 +21,11 @@ class OrderResource extends JsonResource
     {
         return [
             'id' => $this->resource->id,
-            'user_id' =>  $this->resource->userId,
-            'restaurant_id'=> $this->resource->restaurantId,
+            'user_id' =>  $this->resource->user_id,
+            'restaurant_id'=> $this->resource->restaurant_id,
             'status' => $this->resource->status,
-            'total_price'=>$this->resource->totalPrice,
-            'restaurant_worker_id'=>$this->resource->restaurantId
+            'total_price'=>$this->resource->total_price,
+            'restaurant_worker_id'=>$this->resource->restaurant_worker_id
         ];
     }
 }

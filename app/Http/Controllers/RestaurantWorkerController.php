@@ -6,6 +6,8 @@ use App\DTO\RestaurantWorkerDTO;
 use App\Exceptions\ExistsObjectException;
 use App\Exceptions\NotFoundException;
 use App\Http\Requests\RestaurantWorkerRequest;
+use App\Http\Resources\OrderCollection;
+use App\Http\Resources\OrderResource;
 use App\Http\Resources\RestaurantWorkerCollection;
 use App\Http\Resources\RestaurantWorkerResource;
 use App\Services\RestaurantWorkerService;
@@ -85,4 +87,19 @@ class RestaurantWorkerController extends Controller
 
         return new RestaurantWorkerCollection($workers);
     }
+
+    /**
+     * @throws NotFoundException
+     */
+    public function getOrdersList(int $restaurantId): OrderCollection
+    {
+        $orders = $this->workerService->getOrdersList($restaurantId);
+
+        return new OrderCollection($orders);
+    }
+
+    /**
+     * @throws NotFoundException
+     */
+
 }

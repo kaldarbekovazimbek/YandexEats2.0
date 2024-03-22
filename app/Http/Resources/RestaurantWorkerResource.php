@@ -22,7 +22,6 @@ class RestaurantWorkerResource extends JsonResource
             'id'=>$this->resource->id,
             'name'=>$this->resource->name,
             'email'=>$this->resource->email,
-            'password'=>$this->resource->password,
             'restaurant_id'=>$this->resource->restaurant_id
         ];
     }

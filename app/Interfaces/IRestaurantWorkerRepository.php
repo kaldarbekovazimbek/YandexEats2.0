@@ -4,7 +4,6 @@ namespace App\Interfaces;
 
 use App\DTO\RestaurantWorkerDTO;
 use App\Models\RestaurantWorker;
-use mysql_xdevapi\Collection;
 
 interface IRestaurantWorkerRepository
 {
@@ -20,6 +19,7 @@ interface IRestaurantWorkerRepository
 
     public function update(int $workerId, RestaurantWorkerDTO $workerDTO): ?RestaurantWorker;
 
-    public function getOrders(int $workerId);
+    public function getOrdersList(int $workerId);
+    public function getOrderById(int $workerId, int $orderId);
 
 }

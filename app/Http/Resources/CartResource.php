@@ -20,13 +20,11 @@ class CartResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-//        $dishPrice = Dish::query()->select('price')->where('dish_id', $this->resource->id);
-//        $quantity = $this->resource->quantity;
+
         return [
             'user_id' => $this->resource->userId,
             'dish_id' => $this->resource->dishId,
             'quantity' => $this->resource->quantity,
-//            'total_price' =>
         ];
     }
 }

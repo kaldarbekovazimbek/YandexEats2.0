@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\DTO\OrderDTO;
+use App\DTO\UpdateOrderDTO;
 use App\Exceptions\NotFoundException;
 use App\Interfaces\IOrderRepository;
 use App\Models\Order;
@@ -38,6 +39,17 @@ class OrderService
     /**
      * @throws NotFoundException
      */
+    public function update(int $orderId, UpdateOrderDTO $updateOrderDTO): ?Order
+    {
+        $order = $this->orderRepository->getById($orderId);
+        if ($order === null){
+            throw new NotFoundException(__('messages.object_not_found'), 404);
+        }
+        return $this->orderRepository->update($orderId, $updateOrderDTO);
+    }
+    /**
+     * @throws NotFoundException
+     */
     public function getById(int $orderId): Order
     {
         $order = $this->orderRepository->getById($orderId);
@@ -51,7 +63,8 @@ class OrderService
 
     public function getByUserId(int $userId)
     {
-        $userOrder = $this->orderRepository->getByUserId($userId);
+        return $this->orderRepository->getByUserId($userId);
+
     }
 
     /**
@@ -66,5 +79,6 @@ class OrderService
         }
         return $restaurants;
     }
+
 
 }

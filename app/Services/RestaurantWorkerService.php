@@ -98,4 +98,21 @@ class RestaurantWorkerService
         }
         return $workers;
     }
+
+    /**
+     * @throws NotFoundException
+     */
+    public function getOrdersList(int $workerId)
+    {
+        $orders = $this->restaurantWorkerRepository->getOrdersList($workerId);
+        if ($orders === null) {
+            throw new NotFoundException(__('messages.object_not_found'), 404);
+        }
+        return $orders;
+    }
+
+    /**
+     * @throws NotFoundException
+     */
+
 }

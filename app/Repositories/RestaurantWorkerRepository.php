@@ -68,8 +68,13 @@ class   RestaurantWorkerRepository implements IRestaurantWorkerRepository
         return RestaurantWorker::query()->where('restaurant_id', $restaurantId)->paginate(15);
     }
 
-    public function getOrders(int $workerId)
+    public function getOrdersList(int $workerId): LengthAwarePaginator
     {
-        // TODO: Implement getOrders() method.
+        $worker = RestaurantWorker::query()->find($workerId);
+
+
+        return Order::query()->where('restaurant_id', $worker->restaurant_id)->whereNull('restaurant_worker_id')->paginate(15);
     }
+
+
 }

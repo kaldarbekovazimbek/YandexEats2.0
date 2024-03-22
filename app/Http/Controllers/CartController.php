@@ -27,12 +27,12 @@ class CartController extends Controller
     public function addToCart(CartRequest $request, int $userId): JsonResponse
     {
         $validData = $request->validated();
-        $totalPrice = 0; // Инициализируем общую цену
-        $addedDishes = []; // Массив для хранения информации о добавленных блюдах
-        $restaurantId = $validData['restaurant_id']; // Получаем restaurant_id из запроса
+        $totalPrice = 0;
+        $addedDishes = [];
+        $restaurantId = $validData['restaurant_id'];
 
         foreach ($validData['dishes'] as $item) {
-            $dish = Dish::find($item['dish_id']);
+            $dish = Dish::query()->find($item['dish_id']);
 
             if (!$dish) {
                 return response()->json([
