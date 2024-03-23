@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\DTO\User\UserDTO;
+use App\DTO\User\RegistrationUserDTO;
 use App\Interfaces\IUserRepository;
 use App\Models\Order;
 use App\Models\User;
@@ -32,7 +32,7 @@ class   UserRepository implements IUserRepository
         return User::query()->where('email', $userEmail)->first();
     }
 
-    public function create(UserDTO $userDTO): User
+    public function create(RegistrationUserDTO $userDTO): User
     {
         $user = new User();
 
@@ -44,7 +44,7 @@ class   UserRepository implements IUserRepository
         return $user;
     }
 
-    public function update(int $userId, UserDTO $userDTO): ?User
+    public function update(int $userId, RegistrationUserDTO $userDTO): ?User
     {
         $user = $this->getById($userId);
 

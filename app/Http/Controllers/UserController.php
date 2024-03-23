@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\DTO\User\UserDTO;
+use App\DTO\User\RegistrationUserDTO;
 use App\Exceptions\ExistsObjectException;
 use App\Exceptions\NotFoundException;
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\OrderCollection;
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
-use App\Services\UserService;
+use App\Services\User\UserService;
 use Illuminate\Http\JsonResponse;
 
 class UserController extends Controller
@@ -38,7 +38,7 @@ class UserController extends Controller
     {
         $validData = $request->validated();
 
-        $user = $this->userService->create(UserDTO::fromArray($validData));
+        $user = $this->userService->create(RegistrationUserDTO::fromArray($validData));
 
         return new UserResource($user);
     }
@@ -60,7 +60,7 @@ class UserController extends Controller
     {
         $validData = $request->validated();
 
-        $user = $this->userService->update($userId, UserDTO::fromArray($validData));
+        $user = $this->userService->update($userId, RegistrationUserDTO::fromArray($validData));
 
         return new UserResource($user);
     }

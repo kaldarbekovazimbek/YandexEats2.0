@@ -3,7 +3,7 @@
 namespace App\DTO\User;
 
 
-class UserDTO
+class RegistrationUserDTO
 {
     private string $name;
     private string $email;

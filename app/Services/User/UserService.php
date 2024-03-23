@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\User;
 
-use App\DTO\User\UserDTO;
+use App\DTO\User\RegistrationUserDTO;
 use App\Exceptions\ExistsObjectException;
 use App\Exceptions\NotFoundException;
 use App\Interfaces\IUserRepository;
@@ -47,7 +47,7 @@ class UserService
     /**
      * @throws ExistsObjectException
      */
-    public function create(UserDTO $userDTO): User
+    public function create(RegistrationUserDTO $userDTO): User
     {
         $existingUser = $this->userRepository->getByEmail($userDTO->getEmail());
 
@@ -61,7 +61,7 @@ class UserService
     /**
      * @throws ExistsObjectException
      */
-    public function update(int $userId, UserDTO $userDTO): ?User
+    public function update(int $userId, RegistrationUserDTO $userDTO): ?User
     {
         $existingUser = $this->userRepository->getByEmail($userDTO->getEmail());
 

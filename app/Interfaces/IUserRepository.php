@@ -2,7 +2,7 @@
 
 namespace App\Interfaces;
 
-use App\DTO\User\UserDTO;
+use App\DTO\User\RegistrationUserDTO;
 use App\Models\User;
 
 interface IUserRepository
@@ -13,9 +13,9 @@ interface IUserRepository
 
     public function getByEmail(string $userEmail): ?User;
 
-    public function create(UserDTO $userDTO): User;
+    public function create(RegistrationUserDTO $userDTO): User;
 
-    public function update(int $userId, UserDTO $userDTO): ?User;
+    public function update(int $userId, RegistrationUserDTO $userDTO): ?User;
 
     public function getOrders(int $userId);
 
