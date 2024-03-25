@@ -73,4 +73,8 @@ class   RestaurantWorkerRepository implements IRestaurantWorkerRepository
     }
 
 
+    public function getOrderById(int $workerId, int $orderId)
+    {
+        // TODO: Implement getOrderById() method.
+    }
 }
