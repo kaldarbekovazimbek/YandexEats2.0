@@ -17,7 +17,7 @@ class DeliveryDetailFactory extends Factory
     public function definition(): array
     {
         return [
-            'order_id'=>$this->faker->numberBetween(1,40),
+            'order_id'=>$this->faker->numberBetween(1,1045),
             'delivery_address'=>$this->faker->address,
             'delivered_at'=>$this->faker->dateTime(now()),
         ];

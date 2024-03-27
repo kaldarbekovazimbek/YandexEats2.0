@@ -44,16 +44,4 @@ class   UserRepository implements IUserRepository
         return $user;
     }
 
-    public function update(int $userId, RegistrationUserDTO $userDTO): ?User
-    {
-        $user = $this->getById($userId);
-
-        $user->name = $userDTO->getName();
-        $user->email = $userDTO->getEmail();
-        $user->password = bcrypt($userDTO->getPassword());
-        $user->save();
-
-        return $user;
-    }
-
 }

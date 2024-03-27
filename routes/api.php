@@ -43,9 +43,10 @@ Route::prefix('worker')->group(function () {
 
         Route::get('/profile', [WorkerController::class, 'profile']);
         Route::get('/orders', [OrderController::class, 'getRestaurantOrders']);
-        Route::put('/orders/{orderId}', [OrderController::class, 'update']);
+        Route::put('/orders/{orderId}', [OrderController::class, 'changeStatus']);
         Route::post('/dish', [DishController::class, 'store']);
-
+        Route::put('/dish', [DishController::class, 'update']);
+        Route::put('/dish', [DishController::class, 'delete']);
 
     });
 });

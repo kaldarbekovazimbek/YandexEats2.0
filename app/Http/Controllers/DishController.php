@@ -19,10 +19,10 @@ class DishController extends Controller
     {
     }
 
-    public function index(int $restaurantId): DishCollection
+    public function index(int $restaurantId): AnonymousResourceCollection
     {
         $dishes = $this->dishService->index($restaurantId);
-        return new DishCollection($dishes);
+        return DishResource::collection($dishes);
     }
 
     public function getDishByCategory(int $restaurantId, Request $request): AnonymousResourceCollection
@@ -31,16 +31,6 @@ class DishController extends Controller
         $dishes = $this->dishService->getDishesByCategory($restaurantId, $category);
 
         return DishResource::collection($dishes);
-    }
-
-    /**
-     * @throws NotFoundException
-     */
-    public function show(int $dishId): DishResource
-    {
-        $dish = $this->dishService->getById($dishId);
-
-        return new DishResource($dish);
     }
 
     public function store(DishRequest $request): DishResource

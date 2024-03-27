@@ -15,7 +15,6 @@ interface IUserRepository
 
     public function create(RegistrationUserDTO $userDTO): User;
 
-    public function update(int $userId, RegistrationUserDTO $userDTO): ?User;
 
 
 }

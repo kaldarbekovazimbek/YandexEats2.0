@@ -69,7 +69,7 @@ class OrderController extends Controller
     /**
      * @throws NotFoundException
      */
-    public function update(int $orderId, OrderCangeStatusRequest $request): OrdersResource
+    public function changeStatus(int $orderId, OrderCangeStatusRequest $request): OrdersResource
     {
         $validData = $request->validated();
         $order = $this->orderService->update($orderId, UpdateOrderDTO::fromArray($validData));

@@ -6,24 +6,20 @@ use App\Exceptions\NotFoundException;
 use App\Http\Requests\CartRequest;
 use App\Models\Dish;
 
+use App\Services\CartService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
 class CartController extends Controller
 {
-    /**
-     * @throws NotFoundException
-     */
+    public function __construct(protected CartService $cartService)
+    {
+    }
+
     public function show()
     {
-        $userId = Auth::user()->id;
-        $userCart = Cache::get('user-cart:' . $userId);
-        if ($userCart === null) {
-            throw new NotFoundException(__('messages.object_not_found'), 404);
-        }
-        return $userCart;
-
+        return $this->cartService->showCart();
     }
 
     public function addToCart(CartRequest $request): JsonResponse

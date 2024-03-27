@@ -11,4 +11,6 @@ return [
     'email_not_verified'=>'Почта не подтверждена',
     'cart_is_empty'=> 'Корзина пуста',
     'order_placed'=>'Блюдо добавлена в корзину',
+    'cart_empty'=>'Ваша корзина пуста',
+
 ];

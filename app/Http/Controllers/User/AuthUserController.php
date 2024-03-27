@@ -8,8 +8,8 @@ use App\Exceptions\ExistsObjectException;
 use App\Exceptions\NotFoundException;
 use App\Exceptions\NotVerifiedException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UserLoginRequest;
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\User\LoginUserRequest;
+use App\Http\Requests\User\RegisterUserRequest;
 use App\Models\User;
 use App\Services\User\AuthUserService;
 use Illuminate\Http\JsonResponse;
@@ -26,14 +26,14 @@ class AuthUserController extends Controller
     /**
      * @throws ExistsObjectException
      */
-    public function register(WorkerRequest $request): JsonResponse
+    public function register(RegisterUserRequest $request): JsonResponse
     {
         $validData = $request->validated();
 
         $this->authUserService->registration(RegistrationUserDTO::fromArray($validData));
 
         return response()->json([
-            'message' =>__('messages.code_send'),
+            'message' => __('messages.code_send'),
         ]);
     }
 
@@ -45,7 +45,7 @@ class AuthUserController extends Controller
         $this->authUserService->confirmEmail($request);
 
         return response()->json([
-            'message'=>__('messages.email_verified'),
+            'message' => __('messages.email_verified'),
         ]);
 
     }
@@ -55,7 +55,7 @@ class AuthUserController extends Controller
      * @throws NotVerifiedException
      * @throws NotFoundException
      */
-    public function login(UserLoginRequest $request): JsonResponse
+    public function login(LoginUserRequest $request): JsonResponse
     {
         /**
          * @var User $user
