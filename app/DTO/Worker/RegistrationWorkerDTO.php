@@ -1,9 +1,9 @@
 <?php
 
-namespace App\DTO\Restaurant;
+namespace App\DTO\Worker;
 
 
-class RestaurantWorkerDTO
+class RegistrationWorkerDTO
 {
     private string $name;
     private string $email;

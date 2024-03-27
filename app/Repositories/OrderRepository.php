@@ -20,19 +20,21 @@ class OrderRepository implements IOrderRepository
         return Order::query()->where('user_id', $userId)->paginate(15);
     }
 
-    public function getById(int $orderId)
+    public function getOrderById(int $orderId)
     {
-        $userId = Auth::user()->id;
+//        $userId = Auth::user()->id;
 
-        return Order::query()->where('user_id', $userId)->find($orderId);
+        return Order::query()->where('id', $orderId)->find($orderId);
     }
 
-    public function getRestaurantOrders(int $restaurantId): Order
+    public function getRestaurantOrders(): LengthAwarePaginator
     {
         /**
          * @var Order
          */
-        return Order::query()->where('restaurant_id', $restaurantId)->paginate(15);
+        $user = Auth::user();
+        $restaurantId = $user->restaurant_id;
+        return Order::query()->where('restaurant_id', $restaurantId)->where('status', "!=", 'delivered')->paginate(15);
     }
 
     public function create(OrderDTO $orderDTO): Order
@@ -52,9 +54,9 @@ class OrderRepository implements IOrderRepository
         /**
          * @var Order $order
          */
-        $order = $this->getById($orderId);
+        $order = $this->getOrderById($orderId);
         $order->status = $updateOrderDTO->getStatus();
-        $order->restaurant_worker_id = $updateOrderDTO->getWorkerId();
+        $order->restaurant_worker_id = Auth::user()->id;
         $order->save();
 
         return $order;

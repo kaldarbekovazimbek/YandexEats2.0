@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Worker;
 
 use App\DTO\User\RegistrationUserDTO;
+use App\DTO\Worker\RegistrationWorkerDTO;
 use App\Exceptions\BadCredentialsException;
 use App\Exceptions\ExistsObjectException;
 use App\Exceptions\NotFoundException;
@@ -10,15 +11,18 @@ use App\Exceptions\NotVerifiedException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserLoginRequest;
 use App\Http\Requests\UserRequest;
+use App\Http\Requests\WorkerLoginRequest;
+use App\Http\Requests\WorkerRequest;
 use App\Models\User;
 use App\Services\User\AuthUserService;
+use App\Services\Worker\AuthWorkerService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class AuthUserController extends Controller
+class AuthWorkerController extends Controller
 {
     public function __construct(
-        protected AuthUserService $authUserService
+        protected AuthWorkerService $workerService
     )
     {
     }
@@ -30,7 +34,7 @@ class AuthUserController extends Controller
     {
         $validData = $request->validated();
 
-        $this->authUserService->registration(RegistrationUserDTO::fromArray($validData));
+        $this->workerService->registration(RegistrationWorkerDTO::fromArray($validData));
 
         return response()->json([
             'message' =>__('messages.code_send'),
@@ -42,7 +46,7 @@ class AuthUserController extends Controller
      */
     public function confirmationEmail(Request $request): JsonResponse
     {
-        $this->authUserService->confirmEmail($request);
+        $this->workerService->confirmEmail($request);
 
         return response()->json([
             'message'=>__('messages.email_verified'),
@@ -55,17 +59,15 @@ class AuthUserController extends Controller
      * @throws NotVerifiedException
      * @throws NotFoundException
      */
-    public function login(UserLoginRequest $request): JsonResponse
+    public function login(WorkerLoginRequest $request): JsonResponse
     {
-        /**
-         * @var User $user
-         */
+
         $validatedData = $request->validated();
 
-        $userToken = $this->authUserService->login($validatedData);
+        $workerToken = $this->workerService->login($validatedData);
 
         return response()->json([
-            'token' => $userToken
+            'token' => $workerToken
         ]);
 
     }

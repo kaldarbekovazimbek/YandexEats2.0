@@ -10,9 +10,9 @@ interface IOrderRepository
 {
     public function getUserOrders();
 
-    public function getById(int $orderId);
+    public function getOrderById(int $orderId);
 
-    public function getRestaurantOrders(int $restaurantId);
+    public function getRestaurantOrders();
 
     public function create(OrderDTO $orderDTO): Order;
 

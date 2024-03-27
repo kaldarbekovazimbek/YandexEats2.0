@@ -9,6 +9,7 @@ use App\Models\Dish;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class DishRepository implements IDishRepository
 {
@@ -21,13 +22,15 @@ class DishRepository implements IDishRepository
 
     public function createDish(CreateDishDTO $createDishDTO): Dish
     {
+        $user = Auth::user();
+        $restaurantId = $user->restaurant_id;
         $dish = new Dish();
 
         $dish->name = $createDishDTO->getName();
         $dish->descriptions = $createDishDTO->getDescriptions();
         $dish->price = $createDishDTO->getPrice();
         $dish->category = $createDishDTO->getCategory();
-        $dish->restaurant_id = $createDishDTO->getRestaurantId();
+        $dish->restaurant_id = $restaurantId;
         $dish->save();
 
         return $dish;
@@ -43,7 +46,6 @@ class DishRepository implements IDishRepository
         $dish->name = $updateDishDTO->getName();
         $dish->descriptions = $updateDishDTO->getDescriptions();
         $dish->price = $updateDishDTO->getPrice();
-        $dish->category = $updateDishDTO->getCategory();
         $dish->save();
 
         return $dish;
@@ -58,5 +60,10 @@ class DishRepository implements IDishRepository
     public function getById(int $dishId)
     {
         return Dish::query()->find($dishId);
+    }
+
+    public function getDishesByCategory(int $restaurantId,string $category): LengthAwarePaginator
+    {
+        return Dish::query()->where('restaurant_id', $restaurantId)->where('category', $category)->paginate(15);
     }
 }

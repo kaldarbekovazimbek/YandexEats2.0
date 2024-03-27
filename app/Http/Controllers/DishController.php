@@ -10,6 +10,8 @@ use App\Http\Resources\DishCollection;
 use App\Http\Resources\DishResource;
 use App\Services\DishService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class DishController extends Controller
 {
@@ -21,6 +23,14 @@ class DishController extends Controller
     {
         $dishes = $this->dishService->index($restaurantId);
         return new DishCollection($dishes);
+    }
+
+    public function getDishByCategory(int $restaurantId, Request $request): AnonymousResourceCollection
+    {
+        $category = $request->input('q');
+        $dishes = $this->dishService->getDishesByCategory($restaurantId, $category);
+
+        return DishResource::collection($dishes);
     }
 
     /**

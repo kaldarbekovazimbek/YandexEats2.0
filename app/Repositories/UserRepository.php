@@ -56,10 +56,4 @@ class   UserRepository implements IUserRepository
         return $user;
     }
 
-    public function getOrders($userId)
-    {
-       $orders = Order::query()->where('user_id', $userId);
-
-       return $orders;
-    }
 }

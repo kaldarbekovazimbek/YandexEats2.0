@@ -11,4 +11,5 @@ return [
     'email_not_verified'=>'Email not verified',
     'cart_is_empty'=> 'Cart is empty',
     'order_placed'=>'Order placed successfully',
+
     ];

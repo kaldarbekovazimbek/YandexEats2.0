@@ -18,6 +18,11 @@ class DishService
         return $this->dishRepository->index($restaurantId);
     }
 
+    public function getDishesByCategory(int $restaurantId, string $category)
+    {
+        return $this->dishRepository->getDishesByCategory($restaurantId, $category);
+    }
+
     /**
      * @throws NotFoundException
      */

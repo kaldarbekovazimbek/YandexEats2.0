@@ -14,6 +14,7 @@ use App\Models\OrderItem;
 use App\Services\OrderService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
 class OrderController extends Controller
@@ -31,8 +32,9 @@ class OrderController extends Controller
     /**
      * @throws CartException
      */
-    public function store(int $userId): JsonResponse
+    public function store(): JsonResponse
     {
+        $userId = Auth::user()->id;
         $cartKey = 'user-cart:' . $userId;
         $cartData = Cache::get($cartKey);
 
@@ -57,7 +59,7 @@ class OrderController extends Controller
         }
 
         Cache::forget($cartKey);
-
+        sleep(5);
         return response()->json([
             'message' => __('messages.order_placed'),
             'order_id' => $order->id
@@ -85,9 +87,9 @@ class OrderController extends Controller
         return new OrderResource($order);
     }
 
-    public function getRestaurantOrders(int $restaurantId): OrderCollection
+    public function getRestaurantOrders(): OrderCollection
     {
-        $orders = $this->orderService->getRestaurantOrders($restaurantId);
+        $orders = $this->orderService->getRestaurantOrders();
 
         return new OrderCollection($orders);
     }

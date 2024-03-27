@@ -29,7 +29,7 @@ class OrderService
      */
     public function update(int $orderId, UpdateOrderDTO $updateOrderDTO): ?Order
     {
-        $order = $this->orderRepository->getById($orderId);
+        $order = $this->orderRepository->getOrderById($orderId);
         if ($order === null) {
             throw new NotFoundException(__('messages.object_not_found'), 404);
         }
@@ -41,7 +41,7 @@ class OrderService
      */
     public function getById(int $orderId): Order
     {
-        $order = $this->orderRepository->getById($orderId);
+        $order = $this->orderRepository->getOrderById($orderId);
 
         if ($order === null) {
             throw new NotFoundException(__('messages.object_not_found'), 404);
@@ -50,9 +50,9 @@ class OrderService
         return $order;
     }
 
-    public function getRestaurantOrders(int $restaurantId)
+    public function getRestaurantOrders()
     {
-        return $this->orderRepository->getRestaurantOrders($restaurantId);
+        return $this->orderRepository->getRestaurantOrders();
     }
 
 

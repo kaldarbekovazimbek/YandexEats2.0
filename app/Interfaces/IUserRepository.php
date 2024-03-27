@@ -17,6 +17,5 @@ interface IUserRepository
 
     public function update(int $userId, RegistrationUserDTO $userDTO): ?User;
 
-    public function getOrders(int $userId);
 
 }

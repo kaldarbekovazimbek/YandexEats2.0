@@ -2,19 +2,19 @@
 
 namespace App\Services;
 
-use App\DTO\Restaurant\RestaurantWorkerDTO;
+use App\DTO\Worker\RegistrationWorkerDTO;
 use App\Exceptions\ExistsObjectException;
 use App\Exceptions\NotFoundException;
-use App\Interfaces\IRestaurantWorkerRepository;
+use App\Interfaces\IWorkerRepository;
 use App\Models\RestaurantWorker;
 
 
 class RestaurantWorkerService
 {
 
-    protected IRestaurantWorkerRepository $restaurantWorkerRepository;
+    protected IWorkerRepository $restaurantWorkerRepository;
 
-    public function __construct(IRestaurantWorkerRepository $workerRepository)
+    public function __construct(IWorkerRepository $workerRepository)
     {
         $this->restaurantWorkerRepository = $workerRepository;
     }
@@ -32,23 +32,15 @@ class RestaurantWorkerService
         return $worker;
     }
 
-    /**
-     * @throws NotFoundException
-     */
-    public function getWorkerById(int $workerId): ?RestaurantWorker
+    public function profile(): ?RestaurantWorker
     {
-        $worker = $this->restaurantWorkerRepository->getById($workerId);
-
-        if ($worker === null) {
-            throw new NotFoundException(__('messages.object_not_found'), 404);
-        }
-        return $worker;
+        return $this->restaurantWorkerRepository->profile();
     }
 
     /**
      * @throws ExistsObjectException
      */
-    public function create(RestaurantWorkerDTO $workerDTO): RestaurantWorker
+    public function create(RegistrationWorkerDTO $workerDTO): RestaurantWorker
     {
         $existingWorker = $this->restaurantWorkerRepository->getByEmail($workerDTO->getEmail());
 
@@ -62,7 +54,7 @@ class RestaurantWorkerService
     /**
      * @throws ExistsObjectException
      */
-    public function update(int $workerId, RestaurantWorkerDTO $workerDTO): RestaurantWorker
+    public function update(int $workerId, RegistrationWorkerDTO $workerDTO): RestaurantWorker
     {
         $existingWorker = $this->restaurantWorkerRepository->getByEmail($workerDTO->getEmail());
 
@@ -90,7 +82,7 @@ class RestaurantWorkerService
     /**
      * @throws NotFoundException
      */
-    public function getByRestaurant(int $restaurantId)
+    public function getRestaurantWorkers(int $restaurantId)
     {
         $workers = $this->restaurantWorkerRepository->getByRestaurant($restaurantId);
         if ($workers === null) {
