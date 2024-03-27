@@ -8,26 +8,24 @@ use App\Exceptions\NotFoundException;
 use App\Http\Requests\OrderCangeStatusRequest;
 use App\Http\Resources\OrderCollection;
 use App\Http\Resources\OrderResource;
+use App\Http\Resources\OrdersResource;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Services\OrderService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Cache;
 
 class OrderController extends Controller
 {
-    public function __construct(private OrderService $orderService)
+    public function __construct(protected OrderService $orderService)
     {
     }
 
-    /**
-     * @throws NotFoundException
-     */
-
-    public function index()
+    public function getUserOrders(): AnonymousResourceCollection
     {
-        $orders = $this->orderService->index();
-        return new OrderCollection($orders);
+        $orders = $this->orderService->getUserOrders();
+        return OrdersResource::collection($orders);
     }
 
     /**
@@ -69,13 +67,14 @@ class OrderController extends Controller
     /**
      * @throws NotFoundException
      */
-    public function update(int $orderId, OrderCangeStatusRequest $request): OrderResource
+    public function update(int $orderId, OrderCangeStatusRequest $request): OrdersResource
     {
         $validData = $request->validated();
         $order = $this->orderService->update($orderId, UpdateOrderDTO::fromArray($validData));
 
-        return new OrderResource($order);
+        return new OrdersResource($order);
     }
+
     /**
      * @throws NotFoundException
      */
@@ -86,19 +85,9 @@ class OrderController extends Controller
         return new OrderResource($order);
     }
 
-    public function getUserOrders(int $userId): OrderCollection
+    public function getRestaurantOrders(int $restaurantId): OrderCollection
     {
-        $userOrders = $this->orderService->getByUserId($userId);
-
-        return new OrderCollection($userOrders);
-    }
-
-    /**
-     * @throws NotFoundException
-     */
-    public function getByRestaurant(int $restaurantId): OrderCollection
-    {
-        $orders = $this->orderService->getRestaurantById($restaurantId);
+        $orders = $this->orderService->getRestaurantOrders($restaurantId);
 
         return new OrderCollection($orders);
     }

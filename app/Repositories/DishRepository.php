@@ -6,21 +6,20 @@ use App\DTO\Dish\CreateDishDTO;
 use App\DTO\Dish\UpdateDishDTO;
 use App\Interfaces\IDishRepository;
 use App\Models\Dish;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 class DishRepository implements IDishRepository
 {
 
-    public function index()
-    {
-        return Dish::query()->paginate(15);
-    }
-
-    public function getByRestaurants(int $restaurantId)
+    public function index(int $restaurantId): LengthAwarePaginator
     {
         return Dish::query()->where('restaurant_id', $restaurantId)->paginate(15);
     }
 
-    public function createDish(CreateDishDTO $createDishDTO)
+
+    public function createDish(CreateDishDTO $createDishDTO): Dish
     {
         $dish = new Dish();
 
@@ -34,8 +33,11 @@ class DishRepository implements IDishRepository
         return $dish;
     }
 
-    public function updateDish(int $dishId, UpdateDishDTO $updateDishDTO)
+    public function updateDish(int $dishId, UpdateDishDTO $updateDishDTO): ?Dish
     {
+        /**
+         * @var Dish $dish
+         */
         $dish = Dish::query()->find($dishId);
 
         $dish->name = $updateDishDTO->getName();
@@ -49,11 +51,12 @@ class DishRepository implements IDishRepository
 
     public function deleteDish(int $dishId)
     {
-        return Dish::query()->find($dishId);
+        return Dish::query()->find($dishId)->delete();
+
     }
 
     public function getById(int $dishId)
     {
-        return Dish::query()->find($dishId)->delete();
+        return Dish::query()->find($dishId);
     }
 }

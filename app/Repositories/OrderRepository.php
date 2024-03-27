@@ -8,33 +8,26 @@ use App\Interfaces\IOrderRepository;
 use App\Models\Order;
 use App\Models\RestaurantWorker;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 
 
 class OrderRepository implements IOrderRepository
 {
 
-    public function index(): LengthAwarePaginator
+    public function getUserOrders(): LengthAwarePaginator
     {
-        return Order::query()->paginate(15);
-    }
-
-    public function getById(int $orderId): ?Order
-    {
-        /**
-         * @var Order
-         */
-        return Order::query()->find($orderId);
-    }
-
-    public function getByUserId(int $userId)
-    {
-        /**
-         * @var Order
-         */
+        $userId = Auth::user()->id;
         return Order::query()->where('user_id', $userId)->paginate(15);
     }
 
-    public function getByRestaurantId(int $restaurantId)
+    public function getById(int $orderId)
+    {
+        $userId = Auth::user()->id;
+
+        return Order::query()->where('user_id', $userId)->find($orderId);
+    }
+
+    public function getRestaurantOrders(int $restaurantId): Order
     {
         /**
          * @var Order
@@ -56,18 +49,14 @@ class OrderRepository implements IOrderRepository
 
     public function update(int $orderId, UpdateOrderDTO $updateOrderDTO): ?Order
     {
-
+        /**
+         * @var Order $order
+         */
         $order = $this->getById($orderId);
         $order->status = $updateOrderDTO->getStatus();
         $order->restaurant_worker_id = $updateOrderDTO->getWorkerId();
         $order->save();
 
         return $order;
-    }
-    public function getOrderById(int $workerId, int $orderId)
-    {
-        $worker = RestaurantWorker::query()->find($workerId);
-
-        return Order::query()->where('restaurant_id', $worker->restaurant_id)->whereNull('restaurant_worker_id')->find($orderId);
     }
 }

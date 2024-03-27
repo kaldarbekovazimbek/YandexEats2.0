@@ -13,14 +13,24 @@ use Illuminate\Http\JsonResponse;
 
 class DishController extends Controller
 {
-    public function __construct(private DishService $dishService)
+    public function __construct(protected DishService $dishService)
     {
     }
 
-    public function index(): DishCollection
+    public function index(int $restaurantId): DishCollection
     {
-        $dishes = $this->dishService->index();
+        $dishes = $this->dishService->index($restaurantId);
         return new DishCollection($dishes);
+    }
+
+    /**
+     * @throws NotFoundException
+     */
+    public function show(int $dishId): DishResource
+    {
+        $dish = $this->dishService->getById($dishId);
+
+        return new DishResource($dish);
     }
 
     public function store(DishRequest $request): DishResource
@@ -49,7 +59,7 @@ class DishController extends Controller
      */
     public function delete(int $dishId): JsonResponse
     {
-        $dish = $this->dishService->delete($dishId);
+        $this->dishService->delete($dishId);
         return response()->json([
             'message' => __('messages.object_deleted')
         ]);

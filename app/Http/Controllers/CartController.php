@@ -7,6 +7,7 @@ use App\Http\Requests\CartRequest;
 use App\Models\Dish;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
 class CartController extends Controller
@@ -14,8 +15,9 @@ class CartController extends Controller
     /**
      * @throws NotFoundException
      */
-    public function show(int $userId)
+    public function show()
     {
+        $userId = Auth::user()->id;
         $userCart = Cache::get('user-cart:' . $userId);
         if ($userCart === null) {
             throw new NotFoundException(__('messages.object_not_found'), 404);
@@ -24,8 +26,9 @@ class CartController extends Controller
 
     }
 
-    public function addToCart(CartRequest $request, int $userId): JsonResponse
+    public function addToCart(CartRequest $request): JsonResponse
     {
+        $userId = Auth::user()->id;
         $validData = $request->validated();
         $totalPrice = 0;
         $addedDishes = [];
@@ -40,24 +43,20 @@ class CartController extends Controller
                 ], 404);
             }
 
-            // Вычисляем стоимость для текущего блюда и добавляем её к общей цене
             $totalPrice += $dish->price * $item['quantity'];
 
-            // Сохраняем информацию о добавленном блюде в массив
             $addedDishes[] = [
                 'dish_id' => $item['dish_id'],
                 'quantity' => $item['quantity']
             ];
         }
 
-        // Создаем массив с общей ценой, информацией о добавленных блюдах и restaurant_id
         $cartData = [
             'restaurant_id' => $restaurantId,
             'total_price' => $totalPrice,
             'added_dishes' => $addedDishes
         ];
 
-        // Добавляем общую цену, информацию о добавленных блюдах и restaurant_id в кеш
         $cartKey = 'user-cart:' . $userId;
         Cache::put($cartKey, $cartData, 60 * 5);
 

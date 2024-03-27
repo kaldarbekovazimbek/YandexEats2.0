@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
 use App\DTO\User\RegistrationUserDTO;
 use App\DTO\UserLoginDTO;
@@ -9,13 +9,13 @@ use App\Exceptions\BadCredentialsException;
 use App\Exceptions\ExistsObjectException;
 use App\Exceptions\NotFoundException;
 use App\Exceptions\NotVerifiedException;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\UserLoginRequest;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use App\Services\User\AuthUserService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class AuthUserController extends Controller
 {

@@ -19,18 +19,9 @@ class OrderService
         $this->orderRepository = $orderRepository;
     }
 
-    /**
-     * @throws NotFoundException
-     */
-    public function index()
+    public function getUserOrders()
     {
-        $orders = $this->orderRepository->index();
-
-        if ($orders === null) {
-            throw new NotFoundException(__('messages.object_not_found'), 404);
-        }
-
-        return $orders;
+        return $this->orderRepository->getUserOrders();
     }
 
     /**
@@ -39,11 +30,12 @@ class OrderService
     public function update(int $orderId, UpdateOrderDTO $updateOrderDTO): ?Order
     {
         $order = $this->orderRepository->getById($orderId);
-        if ($order === null){
+        if ($order === null) {
             throw new NotFoundException(__('messages.object_not_found'), 404);
         }
         return $this->orderRepository->update($orderId, $updateOrderDTO);
     }
+
     /**
      * @throws NotFoundException
      */
@@ -58,23 +50,9 @@ class OrderService
         return $order;
     }
 
-    public function getByUserId(int $userId)
+    public function getRestaurantOrders(int $restaurantId)
     {
-        return $this->orderRepository->getByUserId($userId);
-
-    }
-
-    /**
-     * @throws NotFoundException
-     */
-    public function getRestaurantById(int $restaurantId)
-    {
-        $restaurants = $this->orderRepository->getByRestaurantId($restaurantId);
-
-        if ($restaurants === null) {
-            throw new NotFoundException(__('messages.object_not_found'), 404);
-        }
-        return $restaurants;
+        return $this->orderRepository->getRestaurantOrders($restaurantId);
     }
 
 

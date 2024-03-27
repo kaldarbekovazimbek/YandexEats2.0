@@ -9,7 +9,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /**
  * @property Order $resource
  */
-class OrderResource extends JsonResource
+class OrdersResource extends JsonResource
 {
 
     /**
@@ -19,6 +19,11 @@ class OrderResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->resource->id,
+            'restaurant_id'=> $this->resource->restaurant_id,
+            'status' => $this->resource->status,
+            'total_price'=>$this->resource->total_price,
+        ];
     }
 }

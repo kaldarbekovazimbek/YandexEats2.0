@@ -9,25 +9,27 @@ use App\Interfaces\IDishRepository;
 
 class DishService
 {
-    public function __construct(private IDishRepository $dishRepository)
+    public function __construct(protected IDishRepository $dishRepository)
     {
     }
 
-    public function index()
+    public function index(int $restaurantId)
     {
-        return $this->dishRepository->index();
+        return $this->dishRepository->index($restaurantId);
     }
 
     /**
      * @throws NotFoundException
      */
-    public function getByRestaurant(int $restaurantId)
+    public function getById(int $dishId)
     {
-        $dishes = $this->dishRepository->getByRestaurants($restaurantId);
-        if ($dishes === null) {
+        $dish = $this->dishRepository->getById($dishId);
+
+        if ($dish === null) {
             throw new NotFoundException(__('messages.object_not_found'), 404);
         }
-        return $dishes;
+
+        return $dish;
     }
 
     public function createDish(CreateDishDTO $createDishDTO)

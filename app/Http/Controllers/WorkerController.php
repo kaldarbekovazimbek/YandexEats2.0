@@ -12,7 +12,7 @@ use App\Http\Resources\RestaurantWorkerResource;
 use App\Services\RestaurantWorkerService;
 use Illuminate\Http\JsonResponse;
 
-class RestaurantWorkerController extends Controller
+class WorkerController extends Controller
 {
     public function __construct(
         private RestaurantWorkerService $workerService
