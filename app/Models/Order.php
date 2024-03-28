@@ -25,29 +25,30 @@ class Order extends Model
 
     ];
 
-    public function orderDetails(): HasOne
-    {
-        return $this->hasOne(DeliveryDetail::class);
-    }
 
     public function orderItems(): HasMany
     {
         return $this->hasMany(OrderItem::class);
     }
 
-    public function user(): BelongsToMany
+    public function user(): BelongsTo
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsTo(User::class);
     }
 
-    public function restaurant(): BelongsToMany
+    public function restaurant(): BelongsTo
     {
-        return $this->belongsToMany(Restaurant::class);
+        return $this->belongsTo(Restaurant::class);
     }
 
     public function workers(): BelongsTo
     {
         return $this->belongsTo(RestaurantWorker::class);
     }
+    public function deliveryDetail(): HasOne
+    {
+        return $this->hasOne(DeliveryDetail::class);
+    }
+
 }
 

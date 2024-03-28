@@ -2,11 +2,13 @@
 
 namespace App\Services\User;
 
+use App\DTO\User\LoginUserDTO;
 use App\DTO\User\RegistrationUserDTO;
 use App\Exceptions\BadCredentialsException;
 use App\Exceptions\ExistsObjectException;
 use App\Exceptions\NotFoundException;
 use App\Exceptions\NotVerifiedException;
+use App\Http\Requests\User\LoginUserRequest;
 use App\Interfaces\IUserRepository;
 use App\Jobs\SendConfirmCodeJob;
 use Illuminate\Http\Request;
@@ -70,10 +72,10 @@ class AuthUserService
      * @throws BadCredentialsException
      * @throws NotFoundException
      */
-    public function login(array $request)
+    public function login(LoginUserDTO $loginUserDTO)
     {
 
-        $user = $this->userRepository->getByEmail($request['email']);
+        $user = $this->userRepository->getByEmail($loginUserDTO->getEmail());
 
         if (!$user) {
             throw new NotFoundException(__('messages.object_not_found'), 404);
@@ -83,7 +85,7 @@ class AuthUserService
             throw new NotVerifiedException(__('messages.email_not_verified'), 403);
         }
 
-        if (!$user || !Hash::check($request['password'], $user->password)) {
+        if (!$user || !Hash::check($loginUserDTO->getPassword(), $user->password)) {
 
             throw new BadCredentialsException(__('messages.bad_credentials'));
 

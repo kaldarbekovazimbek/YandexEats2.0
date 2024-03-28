@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\RestaurantWorker;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 
 class OrderRepository implements IOrderRepository
@@ -22,9 +23,9 @@ class OrderRepository implements IOrderRepository
 
     public function getOrderById(int $orderId)
     {
-//        $userId = Auth::user()->id;
+        $userId = Auth::user()->id;
 
-        return Order::query()->where('id', $orderId)->find($orderId);
+        return Order::query()->where('user_id', $userId)->where('id', $orderId)->find($orderId);
     }
 
     public function getRestaurantOrders(): LengthAwarePaginator
@@ -37,17 +38,6 @@ class OrderRepository implements IOrderRepository
         return Order::query()->where('restaurant_id', $restaurantId)->where('status', "!=", 'delivered')->paginate(15);
     }
 
-    public function create(OrderDTO $orderDTO): Order
-    {
-        $order = new Order();
-        $order->user_id = $orderDTO->getUserId();
-        $order->restaurant_id = $orderDTO->getRestaurantId();
-        $order->status = $orderDTO->getStatus();
-        $order->total_price = $orderDTO->getTotalPrice();
-        $order->save();
-
-        return $order;
-    }
 
     public function update(int $orderId, UpdateOrderDTO $updateOrderDTO): ?Order
     {
@@ -59,6 +49,7 @@ class OrderRepository implements IOrderRepository
         $order->restaurant_worker_id = Auth::user()->id;
         $order->save();
 
+        $order->deliveryDetail()->where('delivered_at', now());
         return $order;
     }
 }

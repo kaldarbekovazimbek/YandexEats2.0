@@ -8,7 +8,8 @@ use App\Models\OrderItem;
 
 class OrderItemRepository
 {
-    public function create(OrderItemDTO $orderItemDTO): OrderItem
+    public function create
+    (OrderItemDTO $orderItemDTO): OrderItem
     {
         $orderItem = new OrderItem();
         $orderItem->order_id = $orderItemDTO->getOrderId();

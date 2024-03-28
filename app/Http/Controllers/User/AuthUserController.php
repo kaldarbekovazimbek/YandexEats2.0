@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\DTO\User\LoginUserDTO;
 use App\DTO\User\RegistrationUserDTO;
 use App\Exceptions\BadCredentialsException;
 use App\Exceptions\ExistsObjectException;
@@ -62,7 +63,7 @@ class AuthUserController extends Controller
          */
         $validatedData = $request->validated();
 
-        $userToken = $this->authUserService->login($validatedData);
+        $userToken = $this->authUserService->login(LoginUserDTO::fromArray($validatedData));
 
         return response()->json([
             'token' => $userToken

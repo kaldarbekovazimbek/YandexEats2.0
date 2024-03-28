@@ -2,6 +2,7 @@
 
 namespace App\Interfaces;
 
+use App\DTO\User\LoginUserDTO;
 use App\DTO\User\RegistrationUserDTO;
 use App\Models\User;
 
@@ -14,6 +15,8 @@ interface IUserRepository
     public function getByEmail(string $userEmail): ?User;
 
     public function create(RegistrationUserDTO $userDTO): User;
+
+    public function login(LoginUserDTO $loginUserDTO);
 
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\DTO\User\LoginUserDTO;
 use App\DTO\User\RegistrationUserDTO;
 use App\Interfaces\IUserRepository;
 use App\Models\Order;
@@ -44,4 +45,8 @@ class   UserRepository implements IUserRepository
         return $user;
     }
 
+    public function login(LoginUserDTO $loginUserDTO)
+    {
+        // TODO: Implement login() method.
+    }
 }
