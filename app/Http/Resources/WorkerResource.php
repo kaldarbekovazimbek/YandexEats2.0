@@ -2,16 +2,14 @@
 
 namespace App\Http\Resources;
 
-use App\Http\Controllers\CartController;
-use App\Models\Cart;
-use App\Models\Dish;
+use App\Models\RestaurantWorker;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @property Cart $resource
+ * @property RestaurantWorker $resource
  */
-class CartResource extends JsonResource
+class WorkerResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -20,11 +18,11 @@ class CartResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-
         return [
-            'user_id' => $this->resource->userId,
-            'dish_id' => $this->resource->dishId,
-            'quantity' => $this->resource->quantity,
+            'id'=>$this->resource->id,
+            'name'=>$this->resource->name,
+            'email'=>$this->resource->email,
+            'restaurant_id'=>$this->resource->restaurant_id
         ];
     }
 }

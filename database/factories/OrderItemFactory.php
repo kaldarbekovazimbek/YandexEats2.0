@@ -20,10 +20,10 @@ class OrderItemFactory extends Factory
     public function definition(): array
     {
         return [
-            'order_id' => $this->faker->numberBetween(1, 40),
-            'dish_id' => $this->faker->numberBetween(1, 100),
+            'order_id' => $this->faker->numberBetween(25, 1045),
+            'dish_id' => $this->faker->numberBetween(1, 2100),
             'quantity' => $this->faker->numberBetween(1, 9),
-            'price' => $this->faker->randomFloat(2, 2,15),
+
         ];
     }
 }

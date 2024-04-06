@@ -41,41 +41,4 @@ class RestaurantController extends Controller
         return new RestaurantResource($restaurant);
     }
 
-    /**
-     * Display the specified resource.
-     * @throws NotFoundException
-     */
-    public function show(int $restaurantId): RestaurantResource
-    {
-        $restaurant = $this->restaurantService->getById($restaurantId);
-
-        return new RestaurantResource($restaurant);
-    }
-
-
-    /**
-     * Update the specified resource in storage.
-     * @throws NotFoundException
-     */
-    public function update(int $restaurantId, RestaurantRequest $request): RestaurantResource
-    {
-        $validData = $request->validated();
-
-        $restaurant = $this->restaurantService->update($restaurantId, RestaurantDTO::fromArray($validData));
-
-        return new RestaurantResource($restaurant);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     * @throws NotFoundException
-     */
-    public function destroy(int $restaurantId): JsonResponse
-    {
-        $this->restaurantService->getById($restaurantId);
-
-        return response()->json([
-            'message' => __('messages.object_deleted')
-        ]);
-    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\DTO\User\LoginUserDTO;
 use App\DTO\User\RegistrationUserDTO;
 use App\Interfaces\IUserRepository;
 use App\Models\Order;
@@ -44,22 +45,8 @@ class   UserRepository implements IUserRepository
         return $user;
     }
 
-    public function update(int $userId, RegistrationUserDTO $userDTO): ?User
+    public function login(LoginUserDTO $loginUserDTO)
     {
-        $user = $this->getById($userId);
-
-        $user->name = $userDTO->getName();
-        $user->email = $userDTO->getEmail();
-        $user->password = bcrypt($userDTO->getPassword());
-        $user->save();
-
-        return $user;
-    }
-
-    public function getOrders($userId)
-    {
-       $orders = Order::query()->where('user_id', $userId);
-
-       return $orders;
+        // TODO: Implement login() method.
     }
 }

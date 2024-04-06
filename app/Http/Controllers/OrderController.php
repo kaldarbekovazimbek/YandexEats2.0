@@ -5,60 +5,38 @@ namespace App\Http\Controllers;
 use App\DTO\Order\UpdateOrderDTO;
 use App\Exceptions\CartException;
 use App\Exceptions\NotFoundException;
+use App\Http\Requests\DeliveryDetailsRequest;
 use App\Http\Requests\OrderCangeStatusRequest;
 use App\Http\Resources\OrderCollection;
 use App\Http\Resources\OrderResource;
+use App\Http\Resources\OrdersResource;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Services\OrderService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
 class OrderController extends Controller
 {
-    public function __construct(private OrderService $orderService)
+    public function __construct(protected OrderService $orderService)
     {
     }
 
-    /**
-     * @throws NotFoundException
-     */
-
-    public function index()
+    public function getUserOrders(): AnonymousResourceCollection
     {
-        $orders = $this->orderService->index();
-        return new OrderCollection($orders);
+        $orders = $this->orderService->getUserOrders();
+        return OrdersResource::collection($orders);
     }
 
     /**
      * @throws CartException
      */
-    public function store(int $userId): JsonResponse
+    public function store(DeliveryDetailsRequest $request): JsonResponse
     {
-        $cartKey = 'user-cart:' . $userId;
-        $cartData = Cache::get($cartKey);
-
-        if (!$cartData) {
-            throw new CartException(__('messages.cart_is_empty'), 404);
-        }
-
-        $restaurantId = $cartData['restaurant_id'];
-
-        $order = new Order();
-        $order->total_price = $cartData['total_price'];
-        $order->user_id = $userId;
-        $order->restaurant_id = $restaurantId;
-        $order->save();
-
-        foreach ($cartData['added_dishes'] as $item) {
-            $orderItem = new OrderItem();
-            $orderItem->order_id = $order->id;
-            $orderItem->dish_id = $item['dish_id'];
-            $orderItem->quantity = $item['quantity'];
-            $orderItem->save();
-        }
-
-        Cache::forget($cartKey);
+        $order = $this->orderService->placeOrder($request);
 
         return response()->json([
             'message' => __('messages.order_placed'),
@@ -69,13 +47,14 @@ class OrderController extends Controller
     /**
      * @throws NotFoundException
      */
-    public function update(int $orderId, OrderCangeStatusRequest $request): OrderResource
+    public function changeStatus(int $orderId, OrderCangeStatusRequest $request): OrdersResource
     {
         $validData = $request->validated();
         $order = $this->orderService->update($orderId, UpdateOrderDTO::fromArray($validData));
 
-        return new OrderResource($order);
+        return new OrdersResource($order);
     }
+
     /**
      * @throws NotFoundException
      */
@@ -86,19 +65,9 @@ class OrderController extends Controller
         return new OrderResource($order);
     }
 
-    public function getUserOrders(int $userId): OrderCollection
+    public function getRestaurantOrders(): OrderCollection
     {
-        $userOrders = $this->orderService->getByUserId($userId);
-
-        return new OrderCollection($userOrders);
-    }
-
-    /**
-     * @throws NotFoundException
-     */
-    public function getByRestaurant(int $restaurantId): OrderCollection
-    {
-        $orders = $this->orderService->getRestaurantById($restaurantId);
+        $orders = $this->orderService->getRestaurantOrders();
 
         return new OrderCollection($orders);
     }

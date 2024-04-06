@@ -2,15 +2,16 @@
 
 namespace App\Http\Resources;
 
-use App\Models\RestaurantWorker;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @property RestaurantWorker $resource
+ * @property Order $resource
  */
-class RestaurantWorkerResource extends JsonResource
+class OrdersResource extends JsonResource
 {
+
     /**
      * Transform the resource into an array.
      *
@@ -19,10 +20,10 @@ class RestaurantWorkerResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'=>$this->resource->id,
-            'name'=>$this->resource->name,
-            'email'=>$this->resource->email,
-            'restaurant_id'=>$this->resource->restaurant_id
+            'id' => $this->resource->id,
+            'restaurant_id'=> $this->resource->restaurant_id,
+            'status' => $this->resource->status,
+            'total_price'=>$this->resource->total_price,
         ];
     }
 }

@@ -20,7 +20,6 @@ class RestaurantResource extends JsonResource
             'name' => $this->resource->name,
             'address' => $this->resource->address,
             'phone' => $this->resource->phone,
-            'menu'=>Dish::query()->where('restaurant_id', $this->resource->id)->paginate(15)
         ];
     }
 }

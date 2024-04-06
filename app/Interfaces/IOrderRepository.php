@@ -8,15 +8,13 @@ use App\Models\Order;
 
 interface IOrderRepository
 {
-    public function index();
+    public function getUserOrders();
 
-    public function getById(int $orderId): ?Order;
+    public function getOrderById(int $orderId);
 
-    public function getByUserId(int $userId);
-
-    public function getByRestaurantId(int $restaurantId);
-
-    public function create(OrderDTO $orderDTO): Order;
+    public function getRestaurantOrders();
 
     public function update(int $orderId, UpdateOrderDTO $updateOrderDTO): ?Order;
+
+
 }

@@ -7,10 +7,10 @@ use App\DTO\Dish\UpdateDishDTO;
 
 interface IDishRepository
 {
-    public function index();
+    public function index(int $restaurantId);
+    public function getDishesByCategory(int $restaurantId, string $category);
 
     public function getById(int $dishId);
-    public function getByRestaurants(int $restaurantId);
 
     public function createDish(CreateDishDTO $createDishDTO);
 

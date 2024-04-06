@@ -22,7 +22,7 @@ class OrderCangeStatusRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status'=>['required', 'string', 'in:in process,ready,delivered'],
+            'status'=>['required', 'string', 'in:in process,on the way,delivered'],
             'restaurant_worker_id'=>['nullable','integer']
         ];
     }

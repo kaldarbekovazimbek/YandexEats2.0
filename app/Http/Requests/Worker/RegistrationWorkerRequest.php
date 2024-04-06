@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Worker;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DishRequest extends FormRequest
+class RegistrationWorkerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,10 @@ class DishRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string'],
-            'descriptions' => ['required', 'string'],
-            'price' => ['required', 'decimal:2'],
-            'category' => ['required', 'string', 'in:fast food, cool drinks, health food, national food, desserts'],
+            'name'=>['required', 'string'],
+            'email'=>['required', 'string'],
+            'password'=>['required', 'string', 'min:6'],
+            'restaurant_id'=>['required','integer', 'exists:App\Models\Restaurant,id']
         ];
     }
 }

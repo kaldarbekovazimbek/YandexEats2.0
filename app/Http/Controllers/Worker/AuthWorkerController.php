@@ -1,26 +1,24 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Worker;
 
-use App\DTO\User\RegistrationUserDTO;
-use App\DTO\UserLoginDTO;
-use App\DTO\UsersDTO;
+
+use App\DTO\Worker\RegistrationWorkerDTO;
 use App\Exceptions\BadCredentialsException;
 use App\Exceptions\ExistsObjectException;
 use App\Exceptions\NotFoundException;
 use App\Exceptions\NotVerifiedException;
-use App\Http\Requests\UserLoginRequest;
-use App\Http\Requests\UserRequest;
-use App\Models\User;
-use App\Services\User\AuthUserService;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Worker\LoginWorkerRequest;
+use App\Http\Requests\Worker\RegistrationWorkerRequest;
+use App\Services\Worker\AuthWorkerService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
-class AuthUserController extends Controller
+class AuthWorkerController extends Controller
 {
     public function __construct(
-        private AuthUserService $authUserService
+        protected AuthWorkerService $workerService
     )
     {
     }
@@ -28,11 +26,11 @@ class AuthUserController extends Controller
     /**
      * @throws ExistsObjectException
      */
-    public function register(UserRequest $request): JsonResponse
+    public function register(RegistrationWorkerRequest $request): JsonResponse
     {
         $validData = $request->validated();
 
-        $this->authUserService->registration(RegistrationUserDTO::fromArray($validData));
+        $this->workerService->registration(RegistrationWorkerDTO::fromArray($validData));
 
         return response()->json([
             'message' =>__('messages.code_send'),
@@ -44,7 +42,7 @@ class AuthUserController extends Controller
      */
     public function confirmationEmail(Request $request): JsonResponse
     {
-        $this->authUserService->confirmEmail($request);
+        $this->workerService->confirmEmail($request);
 
         return response()->json([
             'message'=>__('messages.email_verified'),
@@ -57,17 +55,15 @@ class AuthUserController extends Controller
      * @throws NotVerifiedException
      * @throws NotFoundException
      */
-    public function login(UserLoginRequest $request): JsonResponse
+    public function login(LoginWorkerRequest $request): JsonResponse
     {
-        /**
-         * @var User $user
-         */
+
         $validatedData = $request->validated();
 
-        $userToken = $this->authUserService->login($validatedData);
+        $workerToken = $this->workerService->login($validatedData);
 
         return response()->json([
-            'token' => $userToken
+            'token' => $workerToken
         ]);
 
     }

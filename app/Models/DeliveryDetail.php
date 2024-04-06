@@ -6,7 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-
+/**
+ * @property int $id
+ * @property int $order_id
+ * @property string $delivery_address
+ * @property string $delivered_at
+ */
 class DeliveryDetail extends Model
 {
     use HasFactory;

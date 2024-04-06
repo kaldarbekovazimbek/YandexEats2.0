@@ -10,17 +10,27 @@ use App\Http\Resources\DishCollection;
 use App\Http\Resources\DishResource;
 use App\Services\DishService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class DishController extends Controller
 {
-    public function __construct(private DishService $dishService)
+    public function __construct(protected DishService $dishService)
     {
     }
 
-    public function index(): DishCollection
+    public function index(int $restaurantId): AnonymousResourceCollection
     {
-        $dishes = $this->dishService->index();
-        return new DishCollection($dishes);
+        $dishes = $this->dishService->index($restaurantId);
+        return DishResource::collection($dishes);
+    }
+
+    public function getDishByCategory(int $restaurantId, Request $request): AnonymousResourceCollection
+    {
+        $category = $request->input('q');
+        $dishes = $this->dishService->getDishesByCategory($restaurantId, $category);
+
+        return DishResource::collection($dishes);
     }
 
     public function store(DishRequest $request): DishResource
@@ -49,7 +59,7 @@ class DishController extends Controller
      */
     public function delete(int $dishId): JsonResponse
     {
-        $dish = $this->dishService->delete($dishId);
+        $this->dishService->delete($dishId);
         return response()->json([
             'message' => __('messages.object_deleted')
         ]);

@@ -7,22 +7,19 @@ class UpdateDishDTO
     private string $name;
     private string $descriptions;
     private float $price;
-    private string $category;
+
 
 
     /**
      * @param string $name
      * @param string $descriptions
      * @param float $price
-     * @param string $category
-     * @param int $restaurant_id
      */
-    public function __construct(string $name, string $descriptions, float $price, string $category)
+    public function __construct(string $name, string $descriptions, float $price)
     {
         $this->name = $name;
         $this->descriptions = $descriptions;
         $this->price = $price;
-        $this->category = $category;
 
     }
 
@@ -41,11 +38,6 @@ class UpdateDishDTO
         return $this->price;
     }
 
-    public function getCategory(): string
-    {
-        return $this->category;
-    }
-
 
 
     public static function fromArray(array $date): static
@@ -54,7 +46,7 @@ class UpdateDishDTO
             name: $date['name'],
             descriptions: $date['description'],
             price: $date['price'],
-            category: $date['category'],
+
 
         );
     }

@@ -1,18 +1,19 @@
 <?php
 
-namespace App\DTO\User;
+namespace App\DTO\Worker;
 
 
-class RegistrationUserDTO
+class LoginWorkerDTO
 {
-    private string $name;
     private string $email;
     private string $password;
 
-    public function getName(): string
+    public function __construct(string $email, string $password)
     {
-        return $this->name;
+        $this->email = $email;
+        $this->password = $password;
     }
+
 
     public function getEmail(): string
     {
@@ -24,17 +25,9 @@ class RegistrationUserDTO
         return $this->password;
     }
 
-    public function __construct(string $name, string $email, string $password)
-    {
-        $this->name = $name;
-        $this->email = $email;
-        $this->password = $password;
-    }
-
     public static function fromArray(array $data): static
     {
         return new static(
-            name: $data['name'],
             email: $data['email'],
             password: $data['password'],
         );
